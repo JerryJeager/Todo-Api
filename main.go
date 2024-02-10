@@ -24,9 +24,46 @@ func getTodos(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, todos)
 }
 
+func createTodo(c *gin.Context) {
+	var newTodo todo
+	if err := c.BindJSON(&newTodo); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"message": "Invalid format",
+		})
+	}
+
+	todos = append(todos, newTodo)
+	c.IndentedJSON(http.StatusCreated, newTodo)
+}
+
+func getCompletedTodos(c *gin.Context) {
+	var completedTodos []todo
+	for _, t := range todos {
+		if t.COMPLETED {
+			completedTodos = append(completedTodos, t)
+		}
+	}
+
+	c.IndentedJSON(http.StatusOK, completedTodos)
+}
+
+func getUnCompletedTodos(c *gin.Context) {
+	var unCompletedTodos []todo
+	for _, t := range todos {
+		if !t.COMPLETED {
+			unCompletedTodos = append(unCompletedTodos, t)
+		}
+	}
+
+	c.IndentedJSON(http.StatusOK, unCompletedTodos)
+}
+
 func main() {
 	router := gin.Default()
 	router.GET("/todos", getTodos)
+	router.GET("/todos/completed", getCompletedTodos)
+	router.GET("/todos/uncompleted", getUnCompletedTodos)
+	router.POST("/todos", createTodo)
 
 	router.Run("localhost:8080")
 
