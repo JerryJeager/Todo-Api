@@ -1,15 +1,20 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 type todo struct {
-	ID        string `json:"id"`
-	NAME      string `json:"name"`
-	COMPLETED bool   `json:"completed"`
+	ID        string `json:"id" binding:"required"`
+	NAME      string `json:"name" binding:"required"`
+	COMPLETED bool   `json:"completed" binding:"required"`
+}
+
+type todoCompletedStatus struct {
+	COMPLETED bool `json:"completed" binding:"required"`
 }
 
 var todos = []todo{
@@ -30,6 +35,7 @@ func createTodo(c *gin.Context) {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{
 			"message": "Invalid format",
 		})
+		return
 	}
 
 	todos = append(todos, newTodo)
@@ -58,12 +64,42 @@ func getUnCompletedTodos(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, unCompletedTodos)
 }
 
+func updateCompleteStatus(c *gin.Context) {
+	id := c.Param("id")
+	var completeTodoStatus todoCompletedStatus
+	// completeTodoStatus = &todos
+
+	if err := c.BindJSON(&completeTodoStatus); err != nil {
+		fmt.Println(err)
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"message": "invalid format",
+		})
+		return
+	}
+
+	for i, t := range todos {
+		if t.ID == id {
+			// todos[i].COMPLETED = *completeTodoStatus.COMPLETED
+			// todo: fix internal server error from bindjson for bool not working for false values for completed
+			todos[i].COMPLETED = completeTodoStatus.COMPLETED
+			c.IndentedJSON(http.StatusCreated, todos[i])
+			return
+		}
+	}
+
+	c.IndentedJSON(http.StatusNotFound, gin.H{
+		"message": "Todo not found",
+	})
+
+}
+
 func main() {
 	router := gin.Default()
 	router.GET("/todos", getTodos)
 	router.GET("/todos/completed", getCompletedTodos)
 	router.GET("/todos/uncompleted", getUnCompletedTodos)
 	router.POST("/todos", createTodo)
+	router.PATCH("/todos/status/:id", updateCompleteStatus)
 
 	router.Run("localhost:8080")
 
