@@ -99,7 +99,6 @@ func updateCompleteStatus(c *gin.Context) {
 		return
 	}
 	var completeTodoStatus todoCompletedStatus
-	// completeTodoStatus = &todos
 
 	if err := c.BindJSON(&completeTodoStatus); err != nil {
 		fmt.Println(err)
@@ -111,8 +110,6 @@ func updateCompleteStatus(c *gin.Context) {
 
 	for i, t := range todos {
 		if t.ID == idInt {
-			// todos[i].COMPLETED = *completeTodoStatus.COMPLETED
-			// todo: fix internal server error from bindjson for bool not working for false values for completed
 			todos[i].COMPLETED = completeTodoStatus.COMPLETED
 			c.IndentedJSON(http.StatusCreated, todos[i])
 			return
