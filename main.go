@@ -11,11 +11,11 @@ import (
 type todo struct {
 	ID        int    `json:"id" binding:"required"`
 	NAME      string `json:"name" binding:"required"`
-	COMPLETED bool   `json:"completed" binding:"required"`
+	COMPLETED bool   `json:"completed"`
 }
 
 type todoCompletedStatus struct {
-	COMPLETED bool `json:"completed" binding:"required"`
+	COMPLETED bool `json:"completed"`
 }
 
 var todos = []todo{
