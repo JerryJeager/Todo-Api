@@ -1,5 +1,5 @@
 ## Todo App Api
-I'm learning how to create APIs using Go and Gin Framework - Create new Todos, Edit Todos, Delete Todos, get Todos by Id and get Todos by Status(active & completed)
+I'm learning how to create APIs using Go and Gin Framework - Create new Todos, Edit Todos, Delete Todos, get Todos by Status(uncompleted & completed)
 
 ## Getting Started
 Ensure you have Go installed on your computer
