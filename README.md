@@ -19,7 +19,7 @@ go mod tidy
 go run .
 ```
 ## Documentation
-See documentation for using the TODO APP API on [Todo Api docs](https://jeager-todo-api.onrender.com/docs).
+See documentation for using the TODO APP API on [Todo Api docs](https://jeager-todo-api.onrender.com/docs/index.html).
 
 
 
