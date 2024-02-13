@@ -15,7 +15,7 @@ import (
 // GetTodos             godoc
 // @Summary      Get Todos array
 // @Description  Responds with the list of all Todos as JSON.
-// @Tags         todos
+// @Tags         Todos
 // @Produce      json
 // @Success      200  {array}  models.Todo
 // @Router       / [get]
@@ -23,6 +23,13 @@ func GetTodos(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, data.Todos)
 }
 
+// CreateTodo    godoc
+// @Summary      Create a New Todo
+// @Description  Create a New Todo Object
+// @Tags         Todos
+// @Produce      json
+// @Success      201 {object}  models.Todo
+// @Router       / [post]
 func CreateTodo(c *gin.Context) {
 	var newTodo models.Todo
 	if err := c.BindJSON(&newTodo); err != nil {
@@ -42,6 +49,13 @@ func CreateTodo(c *gin.Context) {
 	c.IndentedJSON(http.StatusCreated, newTodo)
 }
 
+// GetCompletedTodos godoc
+// @Summary          Get completed Todos
+// @Description      Gets an array of all completed Todos
+// @Tags             Todos
+// @Produce          json
+// @Success          200 {object} models.Todo
+// @Router           /completed [get]
 func GetCompletedTodos(c *gin.Context) {
 	var completedTodos []models.Todo
 	for _, t := range data.Todos {
@@ -53,6 +67,13 @@ func GetCompletedTodos(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, completedTodos)
 }
 
+// GetUnCompletedTodos godoc
+// @Summary            Get uncompleted Todos
+// @Description        Gets an array of all uncompleted Todos
+// @Tags               Todos
+// @Produce            json
+// @Success            200 {object} models.Todo
+// @Router           /uncompleted [get]
 func GetUnCompletedTodos(c *gin.Context) {
 	var unCompletedTodos []models.Todo
 	for _, t := range data.Todos {
@@ -64,6 +85,14 @@ func GetUnCompletedTodos(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, unCompletedTodos)
 }
 
+// UpdateCompleteStatus godoc
+// @Summary             Update Todo Status
+// @Description         Change the status of a Todo from uncompleted to completed and vice versa
+// @Tags                Todos
+// @Produce             json
+// @Param               id  path  int  true  "update Todo Status by Todo ID"
+// @Success             201 {object} models.Todo
+// @Router              /{id} [patch]
 func UpdateCompleteStatus(c *gin.Context) {
 	id := c.Param("id")
 	idInt, err := strconv.Atoi(id)
@@ -97,6 +126,14 @@ func UpdateCompleteStatus(c *gin.Context) {
 
 }
 
+// DeleteTodoByID     godoc
+// @Summary           Delete Todo
+// @Description       Delete a Todo by it's Todo ID
+// @Tags              Todos
+// @Produce           json
+// @Param             id  path  int  true  "update Todo Status by Todo ID"
+// @Success           200 {array} models.Todo
+// @Router            /{id}  [delete]
 func DeleteTodoById(c *gin.Context) {
 	id := c.Param("id")
 	var newTodos []models.Todo

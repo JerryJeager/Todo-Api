@@ -26,7 +26,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "todos"
+                    "Todos"
                 ],
                 "summary": "Get Todos array",
                 "responses": {
@@ -37,6 +37,123 @@ const docTemplate = `{
                             "items": {
                                 "$ref": "#/definitions/models.Todo"
                             }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a New Todo Object",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Todos"
+                ],
+                "summary": "Create a New Todo",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Todo"
+                        }
+                    }
+                }
+            }
+        },
+        "/completed": {
+            "get": {
+                "description": "Gets an array of all completed Todos",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Todos"
+                ],
+                "summary": "Get completed Todos",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Todo"
+                        }
+                    }
+                }
+            }
+        },
+        "/uncompleted": {
+            "get": {
+                "description": "Gets an array of all uncompleted Todos",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Todos"
+                ],
+                "summary": "Get uncompleted Todos",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Todo"
+                        }
+                    }
+                }
+            }
+        },
+        "/{id}": {
+            "delete": {
+                "description": "Delete a Todo by it's Todo ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Todos"
+                ],
+                "summary": "Delete Todo",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "update Todo Status by Todo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Todo"
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Change the status of a Todo from uncompleted to completed and vice versa",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Todos"
+                ],
+                "summary": "Update Todo Status",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "update Todo Status by Todo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Todo"
                         }
                     }
                 }
