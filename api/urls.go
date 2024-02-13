@@ -28,6 +28,7 @@ func GetTodos(c *gin.Context) {
 // @Description  Create a New Todo Object
 // @Tags         Todos
 // @Produce      json
+// @Param        createTodo body models.Todo true "Create a new Todo Object"
 // @Success      201 {object}  models.Todo
 // @Router       / [post]
 func CreateTodo(c *gin.Context) {
@@ -91,8 +92,9 @@ func GetUnCompletedTodos(c *gin.Context) {
 // @Tags                Todos
 // @Produce             json
 // @Param               id  path  int  true  "update Todo Status by Todo ID"
+// @Param               completed body models.TodoCompletedStatus true "change the status of a Todo"
 // @Success             201 {object} models.Todo
-// @Router              /{id} [patch]
+// @Router              /status/{id} [patch]
 func UpdateCompleteStatus(c *gin.Context) {
 	id := c.Param("id")
 	idInt, err := strconv.Atoi(id)

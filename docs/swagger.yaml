@@ -12,6 +12,11 @@ definitions:
     - id
     - name
     type: object
+  models.TodoCompletedStatus:
+    properties:
+      completed:
+        type: boolean
+    type: object
 info:
   contact:
     email: amadijerry823@gmail.com
@@ -38,6 +43,13 @@ paths:
       - Todos
     post:
       description: Create a New Todo Object
+      parameters:
+      - description: Create a new Todo Object
+        in: body
+        name: createTodo
+        required: true
+        schema:
+          $ref: '#/definitions/models.Todo'
       produces:
       - application/json
       responses:
@@ -69,25 +81,6 @@ paths:
       summary: Delete Todo
       tags:
       - Todos
-    patch:
-      description: Change the status of a Todo from uncompleted to completed and vice
-        versa
-      parameters:
-      - description: update Todo Status by Todo ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/models.Todo'
-      summary: Update Todo Status
-      tags:
-      - Todos
   /completed:
     get:
       description: Gets an array of all completed Todos
@@ -99,6 +92,32 @@ paths:
           schema:
             $ref: '#/definitions/models.Todo'
       summary: Get completed Todos
+      tags:
+      - Todos
+  /status/{id}:
+    patch:
+      description: Change the status of a Todo from uncompleted to completed and vice
+        versa
+      parameters:
+      - description: update Todo Status by Todo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: change the status of a Todo
+        in: body
+        name: completed
+        required: true
+        schema:
+          $ref: '#/definitions/models.TodoCompletedStatus'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Todo'
+      summary: Update Todo Status
       tags:
       - Todos
   /uncompleted:

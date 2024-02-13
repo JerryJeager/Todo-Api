@@ -50,6 +50,17 @@ const docTemplate = `{
                     "Todos"
                 ],
                 "summary": "Create a New Todo",
+                "parameters": [
+                    {
+                        "description": "Create a new Todo Object",
+                        "name": "createTodo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Todo"
+                        }
+                    }
+                ],
                 "responses": {
                     "201": {
                         "description": "Created",
@@ -73,6 +84,44 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Todo"
+                        }
+                    }
+                }
+            }
+        },
+        "/status/{id}": {
+            "patch": {
+                "description": "Change the status of a Todo from uncompleted to completed and vice versa",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Todos"
+                ],
+                "summary": "Update Todo Status",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "update Todo Status by Todo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "change the status of a Todo",
+                        "name": "completed",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.TodoCompletedStatus"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/models.Todo"
                         }
@@ -130,33 +179,6 @@ const docTemplate = `{
                         }
                     }
                 }
-            },
-            "patch": {
-                "description": "Change the status of a Todo from uncompleted to completed and vice versa",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Todos"
-                ],
-                "summary": "Update Todo Status",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "update Todo Status by Todo ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/models.Todo"
-                        }
-                    }
-                }
             }
         }
     },
@@ -176,6 +198,14 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                }
+            }
+        },
+        "models.TodoCompletedStatus": {
+            "type": "object",
+            "properties": {
+                "completed": {
+                    "type": "boolean"
                 }
             }
         }
