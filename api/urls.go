@@ -12,6 +12,13 @@ import (
 	"net/http"
 )
 
+// GetTodos             godoc
+// @Summary      Get Todos array
+// @Description  Responds with the list of all Todos as JSON.
+// @Tags         todos
+// @Produce      json
+// @Success      200  {array}  models.Todo
+// @Router       / [get]
 func GetTodos(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, data.Todos)
 }
