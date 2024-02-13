@@ -1,6 +1,9 @@
 package main
 
 import (
+	"log"
+	"os"
+
 	url "example.com/todoApi/api"
 	_ "example.com/todoApi/docs"
 	"github.com/gin-gonic/gin"
@@ -16,7 +19,7 @@ import (
 // @contact.url    https://twitter.com/Jerry_Jaeger_
 // @contact.email  amadijerry823@gmail.com
 
-// @host      localhost:8080
+// @host
 // @BasePath  /todos
 func main() {
 	router := gin.Default()
@@ -29,6 +32,12 @@ func main() {
 
 	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	router.Run("localhost:8080")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	if err := router.Run(":" + port); err != nil {
+		log.Panicf("error: %s", err)
+	}
 
 }
