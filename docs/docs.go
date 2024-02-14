@@ -21,7 +21,7 @@ const docTemplate = `{
     "paths": {
         "/": {
             "get": {
-                "description": "Responds with the list of all Todos as JSON.",
+                "description": "Responds with the list of all Todos as an Array.",
                 "produces": [
                     "application/json"
                 ],

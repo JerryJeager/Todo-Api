@@ -14,7 +14,7 @@ import (
 
 // GetTodos             godoc
 // @Summary      Get Todos array
-// @Description  Responds with the list of all Todos as JSON.
+// @Description  Responds with the list of all Todos as an Array.
 // @Tags         Todos
 // @Produce      json
 // @Success      200  {array}  models.Todo
