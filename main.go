@@ -1,8 +1,12 @@
 package main
 
 import (
+	// "database/sql"
+	// "fmt"
 	"log"
 	"os"
+
+	_ "github.com/lib/pq"
 
 	url "example.com/todoApi/api"
 	_ "example.com/todoApi/docs"
@@ -10,6 +14,41 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
+
+// var db *sql.DB
+
+// const (
+// 	host     = "localhost"
+// 	port     = "5433"
+// 	user     = "postgres"
+// 	password = "chidiebere823"
+// 	dbname   = "TODO_DB"
+// )
+
+// func init() {
+
+// 	var err error
+
+// 	connStr := "postgres://postgres:password@localhost/DB_1?sslmode=disable"
+// 	db, err = sql.Open("postgres", connStr)
+
+// 	if err != nil{
+// 		panic(err)
+// 	}
+
+// 	if err := db.Ping(); err != nil{
+// 		panic(err)
+// 	}
+
+// 	fmt.Println("The database is connected.")
+
+// }
+
+// func checkError(err error) {
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// }
 
 // @title     Todo App API
 // @version         1.0
@@ -22,6 +61,7 @@ import (
 // @host
 // @BasePath  /todos
 func main() {
+
 	router := gin.Default()
 	router.GET("/todos", url.GetTodos)
 	router.GET("/todos/completed", url.GetCompletedTodos)
