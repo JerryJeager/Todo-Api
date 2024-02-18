@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 
+	"example.com/todoApi/config"
 	_ "github.com/lib/pq"
 
 	url "example.com/todoApi/api"
@@ -61,6 +62,8 @@ import (
 // @host
 // @BasePath  /todos
 func main() {
+
+	config.Connect()
 
 	router := gin.Default()
 	router.GET("/todos", url.GetTodos)
