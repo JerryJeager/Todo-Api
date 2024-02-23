@@ -2,8 +2,10 @@ package url
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 
+	"example.com/todoApi/config"
 	"example.com/todoApi/data"
 	"example.com/todoApi/models"
 	"example.com/todoApi/utils"
@@ -164,5 +166,34 @@ func DeleteTodoById(c *gin.Context) {
 	data.Todos = newTodos[:]
 
 	c.IndentedJSON(http.StatusOK, data.Todos)
+
+}
+
+// CreateUser     godoc
+// @Summary           Create new User
+// @Description       Create a new User
+// @Tags              User
+// @Produce           json
+// @Param             body  models.User true  "Create a User"
+// @Success           200 {array} models.Todo
+func CreateUser(c *gin.Context) {
+	var user models.User
+
+	if err := c.BindJSON(&user); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{
+			"message": "Invalid format",
+		})
+		return
+	}
+
+	result := config.DB.Create(&user)
+
+	if result.Error != nil {
+		log.Fatal("error passing user")
+		// fmt.Println(result.Error)
+		return
+	}
+
+	c.IndentedJSON(http.StatusCreated, user)
 
 }

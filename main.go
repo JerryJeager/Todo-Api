@@ -6,50 +6,27 @@ import (
 	"log"
 	"os"
 
-	"example.com/todoApi/config"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 
+	// _ "github.com/jinzhu/gorm/dialects/postgres"
+
 	url "example.com/todoApi/api"
+	"example.com/todoApi/config"
 	_ "example.com/todoApi/docs"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// var db *sql.DB
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
-// const (
-// 	host     = "localhost"
-// 	port     = "5433"
-// 	user     = "postgres"
-// 	password = "chidiebere823"
-// 	dbname   = "TODO_DB"
-// )
-
-// func init() {
-
-// 	var err error
-
-// 	connStr := "postgres://postgres:password@localhost/DB_1?sslmode=disable"
-// 	db, err = sql.Open("postgres", connStr)
-
-// 	if err != nil{
-// 		panic(err)
-// 	}
-
-// 	if err := db.Ping(); err != nil{
-// 		panic(err)
-// 	}
-
-// 	fmt.Println("The database is connected.")
-
-// }
-
-// func checkError(err error) {
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// }
+	config.Connect()
+}
 
 // @title     Todo App API
 // @version         1.0
@@ -63,13 +40,12 @@ import (
 // @BasePath  /todos
 func main() {
 
-	config.Connect()
-
 	router := gin.Default()
 	router.GET("/todos", url.GetTodos)
 	router.GET("/todos/completed", url.GetCompletedTodos)
 	router.GET("/todos/uncompleted", url.GetUnCompletedTodos)
 	router.POST("/todos", url.CreateTodo)
+	router.POST("/user", url.CreateUser)
 	router.PATCH("/todos/status/:id", url.UpdateCompleteStatus)
 	router.DELETE("/todos/:id", url.DeleteTodoById)
 

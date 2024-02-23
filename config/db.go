@@ -1,6 +1,9 @@
 package config
 
 import (
+	"fmt"
+	"os"
+
 	"example.com/todoApi/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -10,13 +13,17 @@ var DB *gorm.DB
 
 func Connect() {
 
-	dsn := "host=localhost user=postgress password=chidiebere823A dbname=TODO_DB port=5433"
+	dsn := os.Getenv("DSN")
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		panic(err)
+	} else {
+		fmt.Println("connected successfully to the database")
 	}
+
 	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.Todo{})
 	DB = db
 
 }

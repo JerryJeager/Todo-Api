@@ -9,3 +9,5 @@ var Todos = []models.Todo{
 	{ID: 4, NAME: "Buy Apple Vision Pro", COMPLETED: false},
 	{ID: 5, NAME: "Watch season 2 of Jujutsu Kaisen", COMPLETED: true},
 }
+
+var Users []models.User
